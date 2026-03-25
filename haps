@@ -1,0 +1,66 @@
+<h2>AI Invasive Species Detector</h2>
+<p>Upload an image to detect invasive aquatic species.</p>
+if(best.className.includes("Zebra") || best.className.includes("Carp") || best.className.includes("Sea")){
+  result.innerText = "⚠️ INVASIVE: " + best.className;
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Invasive Species Detector</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+    }
+    img {
+      max-width: 300px;
+      margin-top: 10px;
+    }
+    #result {
+      font-size: 20px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    #info {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .invasive {
+      color: red;
+    }
+    .native {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<h1>AI Invasive Species Detector</h1>
+<p>Upload an image to identify aquatic species</p>
+
+<input type="file" id="imageUpload" />
+<br>
+<img id="preview" />
+
+<p id="result">Prediction will appear here</p>
+<div id="info"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image"></script>
+
+<script>
+const URL = "./"; // your model files in same folder
+let model;
+
+async function loadModel() {
+  model = await tmImage.load(URL + "model.json", URL + "metadata.json");
+}
+loadModel();
+
+// Species info database
+const speciesInfo = {
+  "Zebra Mussel": {
+    type: "invasive",
+    info: "Small freshwater mussel that spreads rapidly and clogs pipes
